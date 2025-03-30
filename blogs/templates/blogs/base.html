@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta name="viewport" content="width=device-width">
+  {% include "blogs/css.css" %}
+  <title></title>
+  {% block head_content %}
+  {% endblock head_content %}
+</head>
+
+
+<body class="">
+
+
+
+    {% include "blogs/header.html" %}
+
+  <div class="nav-scroller py-1 mb-2">
+  <nav class="nav d-flex justify-content-between">
+    <a class="p-2 text-muted" name="World" href="{% url 'blogs:topic' 'World' %}">World</a>
+    <a class="p-2 text-muted" name="Technology" href="{% url 'blogs:topic' 'Technology' %}">Technology</a>
+    <a class="p-2 text-muted" name="Design" href="{% url 'blogs:topic' 'Design' %}">Design</a>
+    <a class="p-2 text-muted" name="Culture" href="{% url 'blogs:topic' 'Culture' %}">Culture</a>
+    <a class="p-2 text-muted" name="Business" href="{% url 'blogs:topic' 'Business' %}">Business</a>
+    <a class="p-2 text-muted" name="Politics" href="{% url 'blogs:topic' 'Politics' %}">Politics</a>
+    <a class="p-2 text-muted" name="Opinion" href="{% url 'blogs:topic' 'Opinion' %}">Opinion</a>
+    <a class="p-2 text-muted" name="Science" href="{% url 'blogs:topic' 'Science' %}">Science</a>
+    <a class="p-2 text-muted" name="Health" href="{% url 'blogs:topic' 'Health' %}">Health</a>
+    <a class="p-2 text-muted" name="Style" href="{% url 'blogs:topic' 'Style' %}">Style</a>
+    <a class="p-2 text-muted" name="Travel" href="{% url 'blogs:topic' 'Travel' %}">Travel</a>
+    <a class="p-2 text-muted" name="Others" href="{% url 'blogs:topic' 'Others' %}">Others</a>
+  </nav>
+
+  </div>
+  <div>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% block content %} {% endblock %}
+
+    {% include "blogs/footer.html" %}
+
+
+    <script src="{% static 'jquery-3.1.0.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <script src="{% static 'jquery-1.11.1.min.js' %}"></script>
+    <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="{% static 'bootstrap.js' %}" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
+
+
+
+    {% block javascript %}{% endblock javascript %}
+
+
+  </div>
+
+  </body>
+</html>

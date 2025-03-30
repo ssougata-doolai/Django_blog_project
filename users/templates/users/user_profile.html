@@ -1,0 +1,83 @@
+{% extends "blogs/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br><br><br>
+<div class="card flex-md-row mb-4 shadow-sm ">
+  <div class="card-body d-flex flex-column align-items-start">
+
+    <div class="container">
+      <img height="125" width="125" class="rounded-circle account-img" src="{{ prof.image.url }}" alt="">
+      <div class="media">
+
+        <div class="media-body">
+
+          <p class="mb-1 text-muted h4">
+          Name:
+          {% if prof.first_name == none %}
+            {{ prof.user }}
+          {% endif %}
+          {% if prof.first_name %}
+            {{ prof.first_name }}
+          {% endif %}
+          {% if prof.last_name %}
+            {{ prof.last_name }}
+          {% endif %}
+          </p>
+
+      <p class="mb-1 text-muted h4">
+        Gender:
+        {% if prof.gender == none %}
+          Not set
+        {% else %}
+          {{ prof.gender }}
+        {% endif %}
+      </p>
+
+      <p class="mb-1 text-muted h4">
+        School:
+        {% if prof.school == none %}
+          Not set
+        {% else %}
+          {{ prof.school }}
+        {% endif %}
+      </p>
+
+      <p class="mb-1 text-muted h4">
+        College:
+        {% if prof.college == none %}
+          Not set
+        {% else %}
+          {{ prof.college }}
+        {% endif %}
+      </p>
+
+      <p class="mb-1 text-muted h4">
+        Current City:
+        {% if prof.current_city == none %}
+          Not set
+        {% else %}
+          {{ prof.current_city }}
+        {% endif %}
+      </p>
+
+      <p class="mb-1 text-muted h4">
+        Website:
+        {% if prof.website == none %}
+          Not set
+        {% else %}
+          {{ prof.website }}
+        {% endif %}
+      </p>
+
+        </div>
+
+      </div>
+      <br>
+      <div class="">
+        <a href="{% url 'blogs:user-post-list' prof.user %}" class='btn btn-primary ml-4 h4'>Blogs</a>
+      </div>
+    </div>
+  </div>
+  </div>
+
+{% endblock %}

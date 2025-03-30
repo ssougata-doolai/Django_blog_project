@@ -1,0 +1,23 @@
+{% extends 'blogs/base.html' %}
+{% block content %}
+<form class="" action="{% url 'blogs:post-publish' post.pk %}" method="POST">
+
+  {% csrf_token %}
+  <h6>Title: </h6><p>{{ post.title }}</p>
+  <br>
+  <h6>Topic: </h6><p>{{ post.topic }}</p>
+  <br>
+  <h6>Post: </h6><p>{{ post.text }}</p>
+  <br>
+
+  <h6>Thumbnail: </h6>
+    {% if post.thumbnail %}
+      <p>{{ post.thumbnail.url }}</p>
+    {% else %}
+      <p>No file selected</p>
+    {% endif %}
+  <br>
+  <input id="inputEmail" name="confirm_publish" class="btn btn-primary" type="submit" value="Confirm Publish">
+  <a class="btn btn-primary" href="{% url 'blogs:post-update' post.pk %}" role="button">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "blogs/base.html" %}
+{% block content %}
+    <div class="">
+      <form class="" action="" method="post">
+        {% csrf_token %}
+          <h2>{{ object.title }}</h2>
+          <p>{{ object.text }}</p>
+        <div class="form-group">
+          <button class="btn btn-danger" type="submit" name="button">Delete</button>
+          {% if object.published_date == null %}
+            <a class="btn btn-primary" href="{% url 'blogs:draft-list' user.username %}"  >Cancel</a>
+          {% else %}
+            <a class="btn btn-primary" href="{% url 'blogs:post-list' user.username %}"  >Cancel</a>
+          {% endif %}
+        </div>
+      </form>
+
+    </div>
+{% endblock content %}

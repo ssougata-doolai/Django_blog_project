@@ -1,0 +1,18 @@
+{% extends 'blogs/base.html' %}
+{% block main_content %}
+<div class="card flex-md-row mb-4 shadow-sm ">
+  <div class="card-body d-flex flex-column align-items-start">
+    <h2 class="h1">My Posts</h2>
+<ul>
+{% for post in posts %}
+        {% if post.author.pk == user.pk %}
+        {% if post.published_date != null %}
+        <li>
+          <h5><a class="p-2 text-muted" href="{% url 'blogs:edit_post' username=user.username blog_id=post.pk %}">{{ post.title }}</a></h5>
+        </li>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

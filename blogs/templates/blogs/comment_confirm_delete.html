@@ -1,0 +1,17 @@
+{% extends "blogs/base.html" %}
+{% block content %}
+    <div class="">
+      <form class="" action="" method="post">
+        {% csrf_token %}
+          <h2>{{ object.post.title }}</h2>
+          <h3>{{ object.post.text }}</h3>
+          <h4>Comment:</h4><p>{{ object.comment }}</p>
+        <div class="form-group">
+          <button class="btn btn-danger" type="submit" name="button">Delete</button>
+
+          <a class="btn btn-primary" href="{% url 'blogs:post-details' comment.post.pk %}"  >Cancel</a>
+        </div>
+      </form>
+
+    </div>
+{% endblock content %}

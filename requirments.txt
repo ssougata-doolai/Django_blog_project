@@ -1,0 +1,11 @@
+Django
+django-summernote
+Pillow
+django-crispy-forms
+crispy-bootstrap4
+django-phone-field
+django-allauth
+requests
+PyJWT
+cryptography
+razorpay

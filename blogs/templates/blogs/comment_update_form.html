@@ -1,0 +1,33 @@
+{% extends "blogs/base.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<form class="" action="" method="post">
+  {% csrf_token %}
+  <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+      <h1 class="display-4 font-italic">{{ comment.post.title }}</h1>
+      <h3>Author : <a class="" href="{% url 'blogs:user-profile' object.author %}">
+        {% if comment.post.author.profile.first_name == none %}
+          {{comment.post.author }}
+        {% endif %}
+        {% if comment.post.author.profile.first_name %}
+          {{ comment.post.author.profile.first_name }}
+        {% endif %}
+        {% if comment.post.author.profile.last_name %}
+         {{ comment.post.author.profile.last_name }}
+        {% endif %}
+      </a></h3>
+      <p class="lead my-3">{{ comment.post.text|truncatewords:30 }}</p>
+
+  </div>
+</div>
+    {{form|crispy}}
+    <button class="btn btn-success" type="submit" name="button">update</button>
+    <a class="btn btn-danger" href="{% url 'blogs:comment-delete' comment.pk %}"  >Delete</a>
+    <a class="btn btn-primary" href="{% url 'blogs:post-details' comment.post.pk %}"  >Cancel</a>
+
+</form>
+
+{% endblock content %}

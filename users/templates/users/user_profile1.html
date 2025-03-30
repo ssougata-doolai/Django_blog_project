@@ -1,0 +1,65 @@
+{% extends 'blogs/base.html' %}
+{% load static %}
+{% block content %}
+<div class="">
+	<div class="row">
+		<div class="col-sm-2">
+
+		</div>
+		<div class="col-12 col-sm-6 col-lg-8">
+
+            <div class="card hovercard">
+                <div class="cardheader" style="background: url('{{ prof.image.url }}');background-size:cover;">
+
+                </div>
+                <div class="avatar">
+                    <img alt="" src="{{ prof.image.url }}">
+                </div>
+                <div class="info">
+                    <div class="title">
+											<p class="mb-1 text-muted h2">
+											{% if prof.first_name == none %}
+												{{ prof.user }}
+											{% endif %}
+											{% if prof.first_name %}
+												{{ prof.first_name }}
+											{% endif %}
+											{% if prof.last_name %}
+												{{ prof.last_name }}
+											{% endif %}
+											</p>
+                    </div>
+                    <div class="desc">Passionate designer</div>
+                    <div class="desc">Curious developer</div>
+                    <div class="desc">Tech geek</div>
+                </div>
+                <div class="bottom">
+                    <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
+                        <img height=30 width = 30 src="/media/twitter.png" alt="">
+                    </a>
+                    <a class="btn btn-danger btn-sm" rel="publisher" href="https://plus.google.com/+ahmshahnuralam">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+                    <a class="btn btn-primary btn-sm" rel="publisher"
+                       href="https://plus.google.com/shahnuralam">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a class="btn btn-warning btn-sm" rel="publisher" href="https://plus.google.com/shahnuralam">
+                        <i class="fa fa-behance"></i>
+                    </a>
+                </div>
+								<div class="">
+									<a href="#" class="btn btn-primary">follow</a>
+									<a href="#" class="btn btn-primary">following</a>
+
+									{% if user != prof.user %}
+									<a href="{% url 'chat:send-msg' prof.user %}" class="btn btn-primary">message</a>
+									{% endif %}
+								</div>
+            </div>
+
+        </div>
+
+	</div>
+</div>
+{% endblock %}

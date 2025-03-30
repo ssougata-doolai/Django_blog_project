@@ -1,0 +1,274 @@
+{% extends "blogs/base.html" %}
+{% load static %}
+
+{% block javascript %}
+
+  <script type="text/javascript">
+    function create_comment(){
+      console.log("Create POst Working!!")
+      console.log($("#comment").val())
+      $.ajax({
+        url: '{% url 'blogs:add-comment' object.pk %}',
+        type: "POST",
+        data: {
+          'the_comment' : $("#comment").val(),
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        success: function(json){
+          $("#comment").val('');
+          console.log(json);
+          $("#talk").load("blogs/comments.html");
+          console.log("succes");
+        },
+        error: function(xhr,errmsg,err){
+          $("#result").html("<div class='alert-box alert redius' data-alert>Opps! Something went wrong: "+errmsg+"<a href='#' class='close'>&times;</a></div>")
+        }
+      });
+    };
+
+    function post_like_func(){
+      console.log("posd Like!! ")
+      $.ajax({
+        url: '{% url 'blogs:post-preference' object.pk 1 %}',
+        type: "GET",
+        data: {},
+        success: function(context){
+          console.log("posdefkj Like!!== ")
+          if(context.value == 1)
+          {
+            $("#post_like").addClass('btn-group-sm btn-outline-success')
+            $("#post_dislike").removeClass('btn-group-sm btn-outline-success')
+            $("#post_dislike").addClass('btn-group-sm btn-outline-secondary')
+            $("#post_like").text(context.json_post_like+'|Unlike')
+            $("#post_dislike").text(context.json_post_dislike+'|Dislike')
+          }
+          else if(context.value == null)
+          {
+            $("#post_like").removeClass('btn-group-sm btn-outline-success')
+            $("#post_like").addClass('btn-group-sm btn-outline-secondary')
+            $("#post_like").text(context.json_post_like+'|Like')
+            $("#post_dislike").text(context.json_post_dislike+'|Dislike')
+          }
+
+
+          console.log("succes");
+        },
+        error: function(){
+
+        }
+      });
+    };
+
+    function post_dislike_func(){
+      console.log("posdefkj Like!! ")
+      $.ajax({
+        url: '{% url 'blogs:post-preference' object.pk 2 %}',
+        type: "GET",
+        data: {},
+        success: function(context){
+          if(context.value == 2)
+          {
+            $("#post_dislike").addClass('btn-group-sm btn-outline-success')
+            $("#post_like").removeClass('btn-group-sm btn-outline-success')
+            $("#post_like").addClass('btn-group-sm btn-outline-secondary')
+            $("#post_like").text(context.json_post_like+'|Like')
+            $("#post_dislike").text(context.json_post_dislike+'|Undislike')
+          }
+          else if(context.value == null)
+          {
+            $("#post_dislike").removeClass('btn-group-sm btn-outline-success')
+            $("#post_dislike").addClass('btn-group-sm btn-outline-secondary')
+            $("#post_like").text(context.json_post_like+'|Like')
+            $("#post_dislike").text(context.json_post_dislike+'|Dislike')
+          }
+
+          console.log("succes");
+        },
+        error: function(){}
+      });
+    };
+
+    function com_like_func(){
+      console.log("posdefkj Like!! ")
+      var a = $("#com_like").attr("data_catid");
+      $.ajax({
+        url: a,
+        type: "GET",
+        data: {},
+        success: function(context){
+          if(context.com_value == 1)
+          {
+            $("#com_like").addClass('btn-group-sm btn-outline-success')
+            $("#com_dislike").removeClass('btn-group-sm btn-outline-success')
+            $("#com_dislike").addClass('btn-group-sm btn-outline-secondary')
+            $("#com_like").text(context.json_com_like+'|Unlike')
+            $("#com_dislike").text(context.json_com_dislike+'|Dislike')
+          }
+          else if(context.com_value == null)
+          {
+            $("#com_like").removeClass('btn-group-sm btn-outline-success')
+            $("#com_like").addClass('btn-group-sm btn-outline-secondary')
+            $("#com_like").text(context.json_com_like+'|Like')
+            $("#com_dislike").text(context.json_com_dislike+'|Dislike')
+          }
+
+          console.log("succesas  = ",context.com_value);
+        },
+      });
+    };
+
+    function com_dislike_func(){
+      console.log("posdefkj Like!! ")
+      var a = $("#com_dislike").attr("data_catid");
+      $.ajax({
+        url: a,
+        type: "GET",
+        data: {},
+        success: function(context){
+          if(context.com_value == 2)
+          {
+            $("#com_dislike").addClass('btn-group-sm btn-outline-success')
+            $("#com_like").removeClass('btn-group-sm btn-outline-success')
+            $("#com_like").addClass('btn-group-sm btn-outline-secondary')
+            $("#com_like").text(context.json_com_like+'|Like')
+            $("#com_dislike").text(context.json_com_dislike+'|Undislike')
+          }
+          else if(context.value == null)
+          {
+            $("#com_dislike").removeClass('btn-group-sm btn-outline-success')
+            $("#com_dislike").addClass('btn-group-sm btn-outline-secondary')
+            $("#com_like").text(context.json_com_like+'|Like')
+            $("#com_dislike").text(context.json_com_dislike+'|Dislike')
+          }
+          console.log("succes=");
+        },
+      });
+    };
+
+  $("#comment_form").on('submit', function(event){
+      event.preventDefault();
+      console.log("form submitted!!");
+      create_comment();
+    })
+
+    $("#post_like").on('click',function(event){
+
+        event.preventDefault();
+        console.log("Post like!!");
+        post_like_func(post_like);
+
+    })
+
+      $("#post_dislike").on('click',function(event){
+        event.preventDefault();
+        console.log("Post like!!");
+        post_dislike_func(post_dislike);
+    })
+
+    $("#com_like").on('click',function(event){
+      event.preventDefault();
+      console.log("Post like!!");
+      com_like_func();
+  })
+
+    $("#com_dislike").on('click',function(event){
+      event.preventDefault();
+      console.log("Post like!!");
+      com_dislike_func();
+  })
+
+
+  </script>
+
+{% endblock javascript %}
+
+{% block content %}
+
+<div>
+  <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+      <h1 class="display-4 font-italic">{{ object.title }}</h1>
+      <h3>Author : <a class="" href="{% url 'blogs:user-profile' object.author %}">
+        {% if object.author.profile.first_name == none %}
+          {{ object.author }}
+        {% endif %}
+        {% if object.author.profile.first_name %}
+          {{ object.author.profile.first_name }}
+        {% endif %}
+        {% if object.author.profile.last_name %}
+         {{ object.author.profile.last_name }}
+        {% endif %}
+      </a></h3>
+      <p class="lead my-3">{{ object.text|linebreaks }}</p>
+
+      <div id="post" class="btn-group mr-2">
+
+        {% if user.is_authenticated %}
+
+        {% if post_pref.value == 1 %}
+          <a id="post_like" data-catid1="{{ user.is_authenticated }}" onclick="" data-catid2="1" href="" class="btn btn-sm btn-outline-success">
+        {% else %}
+          <a id="post_like" data-catid1="{{ user.is_authenticated }}" onclick="" data-catid2="1" href="" class="btn btn-sm btn-outline-secondary">
+        {% endif %}
+
+            {% if json_post_like %}
+            {{ json_post_like }}
+            {% else %}
+            {{ object.likes }}|
+            {% endif %}
+            {% if post_pref.value == 1 %}
+              Unike
+            {% else %}
+              Like
+            {% endif %}
+
+          </a>
+
+          {% if post_pref.value == 2 %}
+            <a id="post_dislike" data-catid1="{{ object.pk }}" onclick="" data-catid2="1" href="" class="btn btn-sm btn-outline-success">
+          {% else %}
+            <a id="post_dislike" data-catid1="{{ object.pk }}" onclick="" data-catid2="1" href="" class="btn btn-sm btn-outline-secondary">
+          {% endif %}
+            {{ object.dislikes }}|
+            {% if post_pref.value == 2 %}
+              Undislike
+            {% else %}
+              Dislike
+            {% endif %}
+            </a>
+
+            {% else %}
+          <div id="post" class="btn-group mr-2">
+          <a  data-catid1="{{ object.pk }}" onclick="" data-catid2="1" href="{% url 'login' %}?next=/post/{{ object.pk }}" class="btn btn-sm btn-outline-secondary">{{object.likes}}|Like</a>
+          <a  data-catid1="{{ object.pk }}" onclick="" data-catid2="1" href="{% url 'login' %}?next=/post/{{ object.pk }}" class="btn btn-sm btn-outline-secondary">{{object.dislikes}}|Dislike</a>
+          </div>
+          {% endif %}
+
+
+
+        {% if user == object.author %}
+
+
+          <a class="btn btn-sm btn-outline-secondary" href="{% url 'blogs:post-update' object.pk %}">Edit</a>
+
+        {% endif %}
+    </div>
+
+    <a href="{% url 'blogs:post-feedback' object.pk %}">Report</a>
+
+    {% if object.edited == true %}
+      edited
+    {% endif %}
+
+  </div>
+</div>
+
+{% include "blogs/comments.html" %}
+
+<div class="card flex-md-row mb-4 shadow-sm">
+  <div class="card-body d-flex flex-column align-items-start">
+    {% include "blogs/comment_form.html" %}
+  </div>
+</div>
+
+{% endblock content %}
